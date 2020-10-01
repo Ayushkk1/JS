@@ -1,0 +1,72 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>JS Console - Example</title>
+	
+</head>
+<body>
+	<script>
+	    (function renderTagCloud() {
+	        var tags = ["cms", "javascript", "js", "ASP.NET MVC", ".net", ".net", "css", "wordpress", "xaml", "js", "http", "web",
+                "asp.net", "asp.net MVC", "ASP.NET MVC", "wp", "javascript", "js", "cms", "html", ".net", ".net", "css", "wordpress", "xaml",
+                "javascript", "http", "http", "CMS", "http", "http", "CMS", "css", "wordpress"];
+	        var tagCload = generateTagCloud(tags, 17, 42);
+	    })();
+
+	    function generateTagCloud(tags, minFontSize, maxFontSize) {
+	        var tagDic = createDictionary(tags);
+	        var div = document.createElement("div");
+	        div.style.width = "600px";
+	        div.style.height = "200px";
+	        div.style.backgroundColor = "#ff0000";
+	        document.body.appendChild(div);
+	        var minFont = generateMinCount(tagDic);
+	        var maxFont = generateMaxCount(tagDic);
+	        
+	        for (var i in tagDic) {
+	            var span = document.createElement("span");
+	            span.innerHTML = i;
+	            span.style.fontSize = generatePropotionalFontSize(tagDic[i], minFontSize, maxFontSize, minFont, maxFont) + "px";
+	            span.style.padding = "5px";
+	            div.appendChild(span);
+	        }
+	    };
+	    function generateMinCount(tagDic) {
+	        var minFont;
+	        for (var item in tagDic) {
+	            if (!minFont || tagDic[item] < minFont) {
+	                minFont = tagDic[item];
+	            }
+	        }
+	        return minFont;
+
+	    }
+	    function generateMaxCount(tagDic) {
+	        var maxFont;
+	        for (var item in tagDic) {
+	            if (!maxFont || tagDic[item] > maxFont) {
+	                maxFont = tagDic[item];
+	            }
+	        }
+	        return maxFont;
+	    }
+	    function generatePropotionalFontSize(count, minFontSize, maxFontSize, minFont, maxFont) {
+	        var scale = count * maxFont / minFont;
+	        return Math.floor(scale * minFontSize / maxFontSize + minFontSize);
+	    };
+
+	    function createDictionary(tags) {
+	        var i = 0;
+	        var dictionary = [];
+	        for (i = 0; i < tags.length; i++) {
+	            if (dictionary[tags[i]]) {
+	                dictionary[tags[i]]++;
+	            }
+                else{
+                    dictionary[tags[i]] = 1;
+	            }
+	        }
+	        return dictionary;
+	    }
+	</script>
+</body>
+</html>
